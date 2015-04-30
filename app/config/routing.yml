@@ -1,0 +1,3 @@
+lama_france_article:
+    resource: "@LamaFranceArticleBundle/Resources/config/routing.yml"
+    prefix:   /

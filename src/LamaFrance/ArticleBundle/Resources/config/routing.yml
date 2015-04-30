@@ -1,0 +1,39 @@
+article:
+    path: /article/
+    defaults: { _controller: LamaFranceArticleBundle:Article:index }
+    
+article_show:
+    path: /article/show/{id}
+    defaults: { _controller: LamaFranceArticleBundle:Article:show }
+    
+article_edit:
+    path: /article/edit/{id}
+    defaults: { _controller: LamaFranceArticleBundle:Article:edit }
+    
+article_new:
+    path: /article/new/
+    defaults: { _controller: LamaFranceArticleBundle:Article:new }
+    
+article_delete:
+    path: /article/delete/{id}
+    defaults: { _controller: LamaFranceArticleBundle:Article:delete }
+    
+article_update:
+    path: /article/update/{id}
+    defaults: { _controller: LamaFranceArticleBundle:Article:update }
+
+article_create:
+    path: /article/create/
+    defaults: { _controller: LamaFranceArticleBundle:Article:create }
+    
+article_search:
+    path: /article/search/
+    defaults: { _controller: LamaFranceArticleBundle:Article:search }
+    
+ajax_get_marque:
+    path: /ajax/getMarque/{typeimprimante}
+    defaults: { _controller: LamaFranceArticleBundle:Ajax:getMarque, typeimprimante: 'null' }
+    
+ajax_get_modele:
+    path: /ajax/getModele/{marque}/{type}
+    defaults: { _controller: LamaFranceArticleBundle:Ajax:getModele, marque: 'null', type: 'null' }

@@ -1,0 +1,137 @@
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - {{ 'views.index.list'|trans({'%entity%': 'Article'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+{% block page %}
+
+    <div class="row">
+
+        <div class="span8">
+            <h1>{{ 'views.index.list'|trans({'%entity%': 'Article'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+        </div>
+        <div class="span2">
+            {% if form_errors(filterForm) %}
+                <div class="alert alert-block alert-error fade in form-errors">
+                    {{ form_errors(filterForm) }}
+                </div>
+            {% endif %}
+            &nbsp;
+        </div>
+        <div class="span2">
+            <div class="filters-right">
+                <a class="btn dropdown-toggle" data-toggle="collapse" data-target="#filters">
+                    {{ 'views.index.filters'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                    <span class="caret"></span>
+                </a>
+            </div>
+        </div>
+
+        <div class="span12">
+            <form class="search_imprimante" method="post" action="{{ path('article_search') }}">
+                <select name="typeimrpimante" data-placeholder="Type d'imprimante" title="Type d'imprimante" class="form-control typeimprimante">
+                    <option label="Type de l'imprimante" value="-1"></option>
+                    {% for key, ti in typeimprimante %}
+                        <option value="{{key}}">{{ti}}</option>
+                    {% endfor %}
+                </select>
+
+                <select name="marque" data-placeholder="Marque" title="Marque" class="form-control marque">
+                    <option label="Marque" value="-1"></option>
+                    {% include 'LamaFranceArticleBundle:Ajax:marque.html.twig' %}
+                </select>
+
+                <select name="modele" data-placeholder="Modèle" title="Modèle" class="form-control modele">
+                    <option label="Modèle" value="-1"></option>
+                    {% include 'LamaFranceArticleBundle:Ajax:modele.html.twig' %}
+                </select>
+
+                <div class="btn_search">
+                    <button class="glyphicon glyphicon-search">Valider</button>
+                </div>
+            </form>
+            <form action="{{ path('article') }}" method="get" {{ form_enctype(filterForm) }}>
+                <p>
+                    <button class="btn btn-primary" type="submit" name="filter_action" value="reset">Tous les articles</button>
+                </p>
+            </form>
+            <div id="filters" class="collapse">
+
+                <form class="well" action="{{ path('article') }}" method="get" {{ form_enctype(filterForm) }}>
+                    {{ form_row(filterForm.id) }}
+                    {{ form_row(filterForm.marque) }}
+                    {{ form_row(filterForm.modele) }}
+                    {{ form_row(filterForm.oem) }}
+                    {{ form_row(filterForm.codelama) }}
+                    {{ form_row(filterForm.capacite) }}
+                    {{ form_row(filterForm.equivalencelama) }}
+                    {{ form_row(filterForm.couleur) }}
+                    {{ form_row(filterForm.description) }}
+                    {{ form_row(filterForm.type) }}
+                    {{ form_rest(filterForm) }}
+
+                    <p>
+                        <button type="submit" name="filter_action" value="filter">{{ 'views.index.filter'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+                        <button type="submit" name="filter_action" value="reset">{{ 'views.index.reset'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <div class="span12">
+
+            <table class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Marque</th>
+                        <th>Modele</th>
+                        <th>Oem</th>
+                        <th>Codelama</th>
+                        <th>Capacite</th>
+                        <th>Equivalencelama</th>
+                        <th>Couleur</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                        <tr>
+                            <td><a href="{{ path('article_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                            <td>{{ entity.marque }}</td>
+                            <td>{{ entity.modele }}</td>
+                            <td>{{ entity.oem }}</td>
+                            <td>{{ entity.codelama }}</td>
+                            <td>{{ entity.capacite }}</td>
+                            <td>{{ entity.equivalencelama }}</td>
+                            <td>{{ entity.couleur }}</td>
+                            <td>{{ entity.description }}</td>
+                            <td>{{ entity.type }}</td>
+                            <td>
+                                <a class="btn btn-mini" href="{{ path('article_show', { 'id': entity.id }) }}">
+                                    {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                                </a>
+                                <a class="btn btn-mini" href="{{ path('article_edit', { 'id': entity.id }) }}">
+                                    {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                                </a>            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="span4">
+            {{ pagerHtml|raw }}
+        </div>
+
+        <div class="span8">
+            <a class="btn btn-primary likepaginator" href="{{ path('article_new') }}">
+                {{ 'views.index.createnew'|trans({}, 'JordiLlonchCrudGeneratorBundle') }} Article
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
